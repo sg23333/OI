@@ -1,6 +1,6 @@
 > 2024-11-20
 
-# CF1651D Nearest Excluded Points
+## CF1651D Nearest Excluded Points
 
 ### 题意
 
@@ -31,7 +31,7 @@
 
 时间复杂度：$O(n\log n)$
 
-### Code
+###代码
 
 ```c++
 #include<bits/stdc++.h>
