@@ -8,7 +8,7 @@
 
 使用 `floyed` 判断即可。
 
-###代码
+### Code
 
 ```cpp
 #include<bits/stdc++.h>

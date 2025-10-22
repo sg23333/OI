@@ -1,0 +1,92 @@
+## UVA1434 YAPTCHA
+
+### 题意
+
+给一个数 $n$，求
+
+$$
+\sum_{i=1}^{n} \left\lfloor \frac{(3i+6)! + 1}{3i+7}  - \left\lfloor \frac{(3i+6)!}{3i+7} \right\rfloor \right\rfloor
+$$
+
+### 思路
+
+原式可以写成：
+
+$$
+\sum_{i=1}^{n} \left\lfloor \frac{(3i+6)! + 1}{3i+7} \right\rfloor - \left\lfloor \frac{(3i+6)!}{3i+7} \right\rfloor
+$$
+
+令：
+
+$$
+f(i)=\left\lfloor \frac{(3i+6)! + 1}{3i+7} \right\rfloor - \left\lfloor \frac{(3i+6)!}{3i+7} \right\rfloor
+$$
+
+则 $f(i)$ 只能取到 $1$ 或 $0$。
+
+发现当且仅当 $(3i+6)!+1 \bmod (3i+7) = 0$ 时，$f(i)=1$，否则 $f(i)=0$。
+
+即：
+
+$$(3i+6)! \equiv -1 \pmod {3i+7}$$
+
+根据**威尔逊定理**，当 $3i+7$ 为质数时， $(3i+6)! \equiv -1 \pmod{3i+7}$ 成立，因此 $f(i)=1$。
+
+否则 $f(i)=0$。
+
+于是我们只需要判断 $3i+7$ 是否为质数，最后前缀和递推即可。
+
+### Code
+
+```cpp
+#include<bits/stdc++.h>
+// #define int long long
+#define double long double
+#define bug cout<<"___songge888___"<<'\n';
+using namespace std;
+int t,n;
+int a[1010000];
+int sum[4010000];
+int vis[4010000];
+int nn;
+int prime[4010000];
+void euler(){
+    for(int i=1;i<=nn;i++){
+        vis[i]=1;
+    }
+    prime[0]=0;
+    for(int i=2;i<=nn;i++){
+        if(vis[i]){
+            prime[++prime[0]]=i;
+        }
+        for(int j=1;j<=prime[0]&&i*prime[j]<=nn;j++){
+            vis[i*prime[j]]=0;
+            if(i%prime[j]==0){
+                break;
+            }
+        }
+    }
+}
+signed main(){
+    ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+    cin>>t;
+    for(int i=1;i<=t;i++){
+        cin>>a[i];
+        n=max(n,a[i]);
+        
+    }
+    nn=n*3+7;
+    euler();
+    for(int i=2;i<=n;i++){
+        sum[i]=sum[i-1];
+        if(vis[3*i+7]){
+            sum[i]++;
+        }
+    }
+    for(int i=1;i<=t;i++){
+        cout<<sum[a[i]]<<'\n';
+    }
+    return 0;
+}
+```
+

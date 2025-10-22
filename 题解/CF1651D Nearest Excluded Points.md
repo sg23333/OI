@@ -31,7 +31,7 @@
 
 时间复杂度：$O(n\log n)$
 
-###代码
+### Code
 
 ```c++
 #include<bits/stdc++.h>
